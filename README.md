@@ -31,4 +31,9 @@ and follow the instructions.
 
 ### 5. Results
 
-The script will generate a PDF file called *Conversation_analysis.pdf* which will be opened automatically.
+The script will generate a PDF file called *Conversation_analysis.pdf* which will be opened automatically. PDF also includes a word cloud but that was too personal to post here.
+
+<img src="https://i.imgur.com/z8eUQeF.png" alt="avatar" width="571">
+<img src="https://i.imgur.com/n0RTXZi.png" alt="avatar" width="571">
+<img src="https://i.imgur.com/6wq3XY2.png" alt="avatar" width="571">
+
