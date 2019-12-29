@@ -16,6 +16,7 @@ class Parser:
         self.timezone = pytz.timezone(own_timezone)
         message_files = [thread_dir + ms_file for ms_file in os.listdir(thread_dir) if ms_file.endswith('.json')]
         self.messages = []
+        assert message_files, "No conversation files."
         for ms in message_files:
             with open(ms, 'r') as read_file:
                 ms_json = json.load(read_file)
