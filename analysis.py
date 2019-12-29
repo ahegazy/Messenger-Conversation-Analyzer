@@ -8,13 +8,9 @@ import seaborn as sns
 import sys
 import pytz
 import subprocess
-from PIL import Image
 from io import BytesIO
 from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.platypus import Paragraph, Frame
 from PyPDF2 import PdfFileWriter, PdfFileReader
-from reportlab.lib.styles import ParagraphStyle
 
 DIR = os.getcwd() + "/messages/inbox/"
 new_image_dir = os.getcwd() + "/Images/"
