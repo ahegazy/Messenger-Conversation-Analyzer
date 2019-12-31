@@ -13,6 +13,8 @@ from reportlab.pdfgen import canvas
 from PyPDF2 import PdfFileWriter, PdfFileReader
 
 DIR = [os.getcwd() + "/messages/inbox/",os.getcwd() + "/messages/filtered_threads/",os.getcwd() +  "/messages/archived_threads/"]
+DIR = [Msgdirect for Msgdirect in DIR if os.path.isdir(Msgdirect)]
+assert DIR, "No messges directory found"
 new_image_dir = os.getcwd() + "/Images/"
 
 class Analysis:
@@ -29,13 +31,10 @@ class Analysis:
 
     def getConversations(self):
         conversation_files=[]
-        for direct in DIR:
-            if os.path.isdir(direct):
-                conversation_files.append(os.listdir(direct))
-                conversation_files[-1].sort()
-            else:
-                DIR.remove(direct)
-            assert conversation_files, "No conversation found"
+        for Msgdirect in DIR:
+            conversation_files.append(os.listdir(Msgdirect))
+            conversation_files[-1].sort()
+        assert conversation_files, "No conversation found"
         return conversation_files
 
     def createScatterChart(self):
