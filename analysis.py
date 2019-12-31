@@ -30,8 +30,12 @@ class Analysis:
     def getConversations(self):
         conversation_files=[]
         for direct in DIR:
-            conversation_files.append(os.listdir(direct))
-            conversation_files[-1].sort()
+            if os.path.isdir(direct):
+                conversation_files.append(os.listdir(direct))
+                conversation_files[-1].sort()
+            else:
+                DIR.remove(direct)
+            assert conversation_files, "No conversation found"
         return conversation_files
 
     def createScatterChart(self):
