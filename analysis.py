@@ -84,7 +84,7 @@ class Analysis:
         fig = plt.figure(figsize=(self.figureWidthInches, self.figureHeightInches * len(messages)))
         for i, user in enumerate(messages):
             ax = fig.add_subplot(len(messages), 1, i + 1)
-            wc = WordCloud(background_color='white', width=self.pageWidth, height=int(self.pageWidth/3)).generate(messages[user])
+            wc = WordCloud(font_path=os.getcwd() + "/fonts/Amiri-Regular.ttf",background_color='white', width=self.pageWidth, height=int(self.pageWidth/3)).generate(messages[user])
             plt.imshow(wc, interpolation='bilinear')
             plt.title("Wordcloud of messages sent by " + user, fontsize=30)
             self.wordHeight += self.figureHeightPix
