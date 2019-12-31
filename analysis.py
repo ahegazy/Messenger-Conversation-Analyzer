@@ -12,7 +12,7 @@ from io import BytesIO
 from reportlab.pdfgen import canvas
 from PyPDF2 import PdfFileWriter, PdfFileReader
 
-DIR = os.getcwd() + "/messages/inbox/"
+DIR = [os.getcwd() + "/messages/inbox/",os.getcwd() + "/messages/filtered_threads/",os.getcwd() +  "/messages/archived_threads/"]
 new_image_dir = os.getcwd() + "/Images/"
 
 class Analysis:
@@ -28,8 +28,10 @@ class Analysis:
         self.figureHeightPix = self.figureHeightInches * 100
 
     def getConversations(self):
-        conversation_files = os.listdir(DIR)
-        conversation_files.sort()
+        conversation_files=[]
+        for direct in DIR:
+            conversation_files.append(os.listdir(direct))
+            conversation_files[-1].sort()
         return conversation_files
 
     def createScatterChart(self):
@@ -192,8 +194,24 @@ class Analysis:
 if __name__ == "__main__":
     analysis = Analysis()
     conversations = analysis.getConversations()
-    for i, conversation in enumerate(conversations):
-        print('['+ str(i) +']  ' + conversation)
+    for i, conversationSrc in enumerate(conversations):
+        print('Source ['+str(i)+']: '+ DIR[i])
+    while True:
+        chosen_src=input("Select Source of chat: ")
+        try:
+            val = int(chosen_src)
+            if val < 0:  # if not a positive int print message and ask for input again
+                print("Sorry, input must be a positive integer, try again")
+                continue
+            elif val > len(conversations)-1:
+                print("Sorry, input must be smaller than the number of sources, try again")
+                continue
+            break
+        except ValueError:
+            print("Sorry, input must be an integer, try again")
+
+    for j, conversation in enumerate(conversations[int(chosen_src)]):
+        print('['+ str(j) +']  ' + conversation)
     while True:
         chosen_index = input("Select index of chat: ")
         try:
@@ -201,8 +219,8 @@ if __name__ == "__main__":
             if val < 0:  # if not a positive int print message and ask for input again
                 print("Sorry, input must be a positive integer, try again")
                 continue
-            elif val > len(conversations)-1:
-                print("Sorry, input must be smaller than the number of chats, try again")
+            elif val > len(conversations[int(chosen_src)])-1:
+                print("Sorry, input must be smaller than the number of chats in the chosen source, try again")
                 continue
             break
         except ValueError:
@@ -217,9 +235,9 @@ if __name__ == "__main__":
         else:
             print("Timezone not valid, try again")
 
-    chosen = conversations[int(chosen_index)]
+    chosenPath = DIR[int(chosen_src)] + '/' + conversations[int(chosen_src)][int(chosen_index)]
 
-    analysis.p = Parser(chosen, chosen_timezone)
+    analysis.p = Parser(chosenPath, chosen_timezone)
     analysis.createScatterChart()
     analysis.createHeatmap()
     analysis.createWordcloud()
